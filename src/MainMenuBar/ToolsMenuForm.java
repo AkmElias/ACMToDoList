@@ -17,16 +17,22 @@ import javax.swing.JOptionPane;
  */
 public class ToolsMenuForm extends JMenu {
 
+    /**
+     * Creates new menu ToolsMenuForm initialize tools menu add setting menu add
+     * about menu
+     */
     public ToolsMenuForm() {
         super("Tools");
         initSettingJMenuItem();
         initAboutJMenuItem();
-
     }
 
     private JMenuItem settingJMenuItem;
     private JMenuItem aboutJMenuItem;
 
+    /**
+     * initialize setting menu add action listener to setting menu
+     */
     private void initSettingJMenuItem() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
@@ -42,11 +48,14 @@ public class ToolsMenuForm extends JMenu {
         add(settingJMenuItem);
     }
 
+    /**
+     * initialize about menu add action listener to about menu
+     */
     private void initAboutJMenuItem() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
         aboutJMenuItem = new javax.swing.JMenuItem("About..");
-        
+
         aboutJMenuItem.addActionListener(new ActionListener() {
 
             @Override
@@ -55,7 +64,7 @@ public class ToolsMenuForm extends JMenu {
                 JOptionPane.showMessageDialog(acmtodolist.AcmToDoList.main_Window, "Build by Kazi Nayeem", "Credits and About", JOptionPane.PLAIN_MESSAGE);
             }
         });
-        
+
         add(aboutJMenuItem);
     }
 }

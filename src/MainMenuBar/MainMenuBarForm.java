@@ -13,17 +13,20 @@ import javax.swing.JMenu;
  */
 public class MainMenuBarForm extends javax.swing.JMenuBar {
 
+    /**
+     * Creates new menu bar MainMenuBarForm initialize file menu and tools menu
+     */
     public MainMenuBarForm() {
         super();
-        
+
         fileJMenu = new FileMenuForm();
         this.add(fileJMenu);
-            
+
         toolsJMenu = new ToolsMenuForm();
         this.add(toolsJMenu);
     }
 
     private final JMenu fileJMenu;
     private final JMenu toolsJMenu;
-   
+
 }

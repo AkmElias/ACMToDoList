@@ -5,12 +5,14 @@
  */
 package acmtodolist;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
+import problemdetails.FullProblem;
 import problemdetails.JudgeDetail;
-import problemdetails.SimpleProblem;
+import problemdetails.TopicClass;
+import problemdetails.TopicDetail;
 
 /**
  *
@@ -18,26 +20,44 @@ import problemdetails.SimpleProblem;
  */
 public class AddProblemJPanelForm extends javax.swing.JPanel {
 
-    static void refreshJudgeComboBox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private String[] topicNameList;
 
     /**
      * Creates new form AddProblemJPanelForm
+     * initialize all components in add problem panel
      */
     public AddProblemJPanelForm() {
+        super();
         initComponents();
         refreshJudgeSelectComboBox();
+        refreshTopicList();
         initAddProblemJButton();
+        diffLevelJComboBox.setSelectedIndex(0);
     }
-
-    public void refreshJudgeSelectComboBox() {
+    /**
+     * when judge updated,
+     * this update judge selection combo box
+     *
+     */
+    final void refreshJudgeSelectComboBox() {
         //add problem>>judgeSelectCombobox initialize
         String str[] = new String[JudgeDetail.getNumberOfJudge()];
         for (int i = 0; i < str.length; i++) {
             str[i] = JudgeDetail.getJudgeName(i);
         }
         judgeSelectJComboBox.setModel(new DefaultComboBoxModel(str));
+    }
+    /**
+     * when topic list update,
+     * this update topic selection combo box
+     */
+    final void refreshTopicList() {
+
+        topicNameList = TopicDetail.getTopicNameList();
+
+        topicNameList[0] = TopicDetail.SELECT_ONE;
+
+        selectTopicJComboBox.setModel(new DefaultComboBoxModel(topicNameList));
     }
 
     /**
@@ -56,6 +76,17 @@ public class AddProblemJPanelForm extends javax.swing.JPanel {
         newProblemNameJLabel = new javax.swing.JLabel();
         problemNameJTextField = new javax.swing.JTextField();
         addProblemJButton = new javax.swing.JButton();
+        addProblemNotifyJLabel = new javax.swing.JLabel();
+        selectTopicJComboBox = new javax.swing.JComboBox();
+        topicNameJLabel = new javax.swing.JLabel();
+        diffLevelJComboBox = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        inputJTextArea = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        outputJTextArea = new javax.swing.JTextArea();
 
         judgeSelectJComboBox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         judgeSelectJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -68,60 +99,147 @@ public class AddProblemJPanelForm extends javax.swing.JPanel {
         newProblemNameJLabel.setText("Problem Name: *");
 
         addProblemJButton.setText("Add Problem");
+        addProblemJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProblemJButtonActionPerformed(evt);
+            }
+        });
+
+        topicNameJLabel.setText("Topic Name :");
+
+        diffLevelJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+
+        jLabel1.setText("Difficulty Level");
+
+        inputJTextArea.setColumns(20);
+        inputJTextArea.setRows(5);
+        jScrollPane1.setViewportView(inputJTextArea);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Sample Input");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Sample Output");
+
+        outputJTextArea.setColumns(20);
+        outputJTextArea.setRows(5);
+        jScrollPane2.setViewportView(outputJTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(newProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newProblemNumberJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newProblemJudge, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(judgeSelectJComboBox, 0, 166, Short.MAX_VALUE)
-                    .addComponent(problemNoJTextField)
-                    .addComponent(problemNameJTextField))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(529, Short.MAX_VALUE)
-                .addComponent(addProblemJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(newProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(newProblemNumberJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(newProblemJudge, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                            .addComponent(topicNameJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(selectTopicJComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(judgeSelectJComboBox, 0, 166, Short.MAX_VALUE)
+                                .addComponent(problemNoJTextField)
+                                .addComponent(problemNameJTextField))
+                            .addComponent(diffLevelJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 305, Short.MAX_VALUE)
+                        .addComponent(addProblemNotifyJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addProblemJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(newProblemJudge, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(judgeSelectJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(problemNoJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                            .addComponent(newProblemNumberJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(newProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(problemNameJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(selectTopicJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(topicNameJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(diffLevelJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newProblemJudge, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(judgeSelectJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(problemNoJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                    .addComponent(newProblemNumberJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(problemNameJTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
-                .addComponent(addProblemJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addProblemJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addProblemNotifyJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addProblemJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProblemJButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addProblemJButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProblemJButton;
+    private javax.swing.JLabel addProblemNotifyJLabel;
+    private javax.swing.JComboBox diffLevelJComboBox;
+    private javax.swing.JTextArea inputJTextArea;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox judgeSelectJComboBox;
     private javax.swing.JLabel newProblemJudge;
     private javax.swing.JLabel newProblemNameJLabel;
     private javax.swing.JLabel newProblemNumberJLabel;
+    private javax.swing.JTextArea outputJTextArea;
     private javax.swing.JTextField problemNameJTextField;
     private javax.swing.JTextField problemNoJTextField;
+    private javax.swing.JComboBox selectTopicJComboBox;
+    private javax.swing.JLabel topicNameJLabel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * this initialize add button
+     * add action listener to the button
+     * update the added problem status
+     */
     private void initAddProblemJButton() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         addProblemJButton.addActionListener(new ActionListener() {
@@ -129,20 +247,82 @@ public class AddProblemJPanelForm extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+                addProblemNotifyJLabel.setForeground(Color.RED);
                 int judge = judgeSelectJComboBox.getSelectedIndex();
-                String probID = problemNoJTextField.getText();
-                String probName = problemNameJTextField.getText();
-      
-                if(judge == 0 || probID.equals("") || probName.equals("")){
-                    JOptionPane.showMessageDialog(AcmToDoList.main_Window,"Invalid input", "Error", JOptionPane.WARNING_MESSAGE);
+                String probID = problemNoJTextField.getText().trim();
+                String probName = problemNameJTextField.getText().trim();
+
+                if (judge == 0 || probID.equals("") || probName.equals("")) {
+                    //JOptionPane.showMessageDialog(AcmToDoList.main_Window, "Invalid input", "Error", JOptionPane.WARNING_MESSAGE);
+                    addProblemNotifyJLabel.setText("Invalid input");
                     return;
                 }
-                SimpleProblem obj = new SimpleProblem(JudgeDetail.getJudgeName(judge), probID, probName);
-                obj.saveToFile();
-                AcmToDoList.All_Problem_List.add(obj);
-                AcmToDoList.main_Window.refreshProblemJTable();
+
+                FullProblem obj = new FullProblem(JudgeDetail.getJudgeName(judge), probID, probName);
+                obj.setDifficultyLevel(diffLevelJComboBox.getSelectedIndex());
+                int result = problemdetails.TopicDetail.addProblemToTopic(TopicDetail.ALL_PROBLEM_Topic, obj);
+                boolean flag = false;
+                if (result == TopicClass.SUCCESSFULLY_ADDED) {
+                    
+                    obj.addInputOutput(inputJTextArea.getText().trim(), outputJTextArea.getText().trim());
+                    obj.saveToFile();
+
+                    //AcmToDoList.main_Window.refreshProblemJTable();
+                    if (TopicDetail.ALL_PROBLEM_Topic == AcmToDoList.lastSelectedTopic) {
+                        flag = true;
+                    }
+                    addProblemNotifyJLabel.setForeground(Color.BLACK);
+                    addProblemNotifyJLabel.setText("Successfully added");
+
+                    String topic = selectTopicJComboBox.getSelectedItem().toString();
+                    if (!topic.equalsIgnoreCase(TopicDetail.SELECT_ONE)) {
+                        result = problemdetails.TopicDetail.addProblemToTopic(topic, obj);
+                        addProblemNotifyJLabel.setForeground(Color.RED);
+
+                        if (result == TopicClass.SUCCESSFULLY_ADDED) {
+
+                            //AcmToDoList.main_Window.refreshProblemJTable();
+                            if (topic == AcmToDoList.lastSelectedTopic) {
+                                flag = true;
+                            }
+                            addProblemNotifyJLabel.setForeground(Color.BLACK);
+                            addProblemNotifyJLabel.setText("Successfully added");
+                            obj.addTopic(topic);
+                            obj.saveToFile();
+
+                        } else if (result == TopicClass.ERROR_IN_ADDING) {
+
+                            addProblemNotifyJLabel.setText("Error in adding problem");
+
+                        } else if (result == TopicClass.ALREADY_IN_THIS_TOPIC) {
+
+                            addProblemNotifyJLabel.setText("Already added");
+
+                        } else if (result == TopicClass.TOPIC_NOT_FOUND) {
+
+                            addProblemNotifyJLabel.setText(topic + " Topic Not Found");
+                        }
+                    }
+
+                } else if (result == TopicClass.ERROR_IN_ADDING) {
+
+                    addProblemNotifyJLabel.setText("Error in adding problem");
+
+                } else if (result == TopicClass.ALREADY_IN_THIS_TOPIC) {
+
+                    addProblemNotifyJLabel.setText("Already added");
+
+                } else if (result == TopicClass.TOPIC_NOT_FOUND) {
+
+                    addProblemNotifyJLabel.setText(TopicDetail.ALL_PROBLEM_Topic + " Topic Not Found");
+                }
+                if (flag) {
+                    AcmToDoList.changeSelectedTopic(AcmToDoList.lastSelectedTopic);
+                }
+
             }
         });
-        
+
     }
 }

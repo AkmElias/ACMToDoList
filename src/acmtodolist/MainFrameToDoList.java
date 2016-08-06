@@ -7,6 +7,8 @@ package acmtodolist;
 
 import MainMenuBar.MainMenuBarForm;
 import javax.swing.JMenuBar;
+import problemdetails.FullProblem;
+import problemdetails.SimpleProblem;
 
 /**
  *
@@ -16,6 +18,10 @@ public class MainFrameToDoList extends javax.swing.JFrame {
 
     /**
      * Creates new form MainFrameToDoList
+     * add a SplitPane in main frame
+     * add topic panel as left component of splitpane
+     * add a tabbed pane as right component of splitpane 
+     * initialize problem tab and add problem tab to the tabbed pane
      */
     public MainFrameToDoList() {
         super("ACM To Do List");
@@ -24,11 +30,14 @@ public class MainFrameToDoList extends javax.swing.JFrame {
         mainMenuBar = new MainMenuBarForm();
         setJMenuBar(mainMenuBar);
         
-        ProblemJPanel = new ProblemsJPanelForm();
+        ProblemJPanel = new ProblemTabJPanelFrom();
         mainJTabbedPane.addTab("Problems", null, ProblemJPanel, "Display All Problems");
         
         addProblemJPanel = new AddProblemJPanelForm();
         mainJTabbedPane.addTab("Add Problem", null, addProblemJPanel, "Add new Problem");
+        
+        topicPanel = new TopicJPanelForm();
+        jSplitPane1.setLeftComponent(topicPanel);
         
     }
     
@@ -41,67 +50,14 @@ public class MainFrameToDoList extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        topicDetailsJPanel = new javax.swing.JPanel();
-        jSeparator3 = new javax.swing.JSeparator();
-        totalProblemNameJLabel = new javax.swing.JLabel();
-        solvedProblemNameJLabel = new javax.swing.JLabel();
-        unsolvedProblemNameJLabel = new javax.swing.JLabel();
-        totalProblemNoJLabel = new javax.swing.JLabel();
-        solvedProblemNoJLabel = new javax.swing.JLabel();
-        unsolvedProblemNoJLabel = new javax.swing.JLabel();
+        jSplitPane1 = new javax.swing.JSplitPane();
         mainJTabbedPane = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        totalProblemNameJLabel.setText("Total Problems:");
-
-        solvedProblemNameJLabel.setText("Solved Problems:");
-
-        unsolvedProblemNameJLabel.setText("Unsolved Problem:");
-
-        totalProblemNoJLabel.setText("Total No");
-
-        solvedProblemNoJLabel.setText("solved No");
-
-        unsolvedProblemNoJLabel.setText("unsolved no");
-
-        javax.swing.GroupLayout topicDetailsJPanelLayout = new javax.swing.GroupLayout(topicDetailsJPanel);
-        topicDetailsJPanel.setLayout(topicDetailsJPanelLayout);
-        topicDetailsJPanelLayout.setHorizontalGroup(
-            topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator3)
-            .addGroup(topicDetailsJPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(unsolvedProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(totalProblemNameJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(solvedProblemNameJLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(totalProblemNoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(solvedProblemNoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(unsolvedProblemNoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        topicDetailsJPanelLayout.setVerticalGroup(
-            topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(topicDetailsJPanelLayout.createSequentialGroup()
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(totalProblemNoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(totalProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(solvedProblemNoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(solvedProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(topicDetailsJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(unsolvedProblemNameJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                    .addComponent(unsolvedProblemNoJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 22, Short.MAX_VALUE))
-        );
+        jSplitPane1.setDividerLocation(175);
+        jSplitPane1.setRightComponent(mainJTabbedPane);
 
         setJMenuBar(jMenuBar1);
 
@@ -109,17 +65,11 @@ public class MainFrameToDoList extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(topicDetailsJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainJTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 894, Short.MAX_VALUE))
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1129, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(443, Short.MAX_VALUE)
-                .addComponent(topicDetailsJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(mainJTabbedPane)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
         );
 
         pack();
@@ -161,30 +111,65 @@ public class MainFrameToDoList extends javax.swing.JFrame {
         });
     }
         
-    private ProblemsJPanelForm ProblemJPanel;
+    private ProblemTabJPanelFrom ProblemJPanel;
     private AddProblemJPanelForm addProblemJPanel;
     private JMenuBar mainMenuBar;
+    private TopicJPanelForm topicPanel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane mainJTabbedPane;
-    private javax.swing.JLabel solvedProblemNameJLabel;
-    private javax.swing.JLabel solvedProblemNoJLabel;
-    private javax.swing.JPanel topicDetailsJPanel;
-    private javax.swing.JLabel totalProblemNameJLabel;
-    private javax.swing.JLabel totalProblemNoJLabel;
-    private javax.swing.JLabel unsolvedProblemNameJLabel;
-    private javax.swing.JLabel unsolvedProblemNoJLabel;
     // End of variables declaration//GEN-END:variables
 
-    void refreshJudgeComboBox() {
+    /**
+     * update Judge combo box in the whole panel
+     */
+    public void refreshJudgeComboBox() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         addProblemJPanel.refreshJudgeSelectComboBox();
     }
-
-    void refreshProblemJTable() {
+    /**
+     * update the problem table
+     */
+    public void refreshProblemJTable() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         ProblemJPanel.refreshProblemJTable();
     }
+    /**
+     * update topic list in topic panel
+     * update topic list in add problem panel
+     * update topic list in problem Panel
+     */
+    public void refreshTopicList() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        topicPanel.refreshTopicList();
+        addProblemJPanel.refreshTopicList();
+        ProblemJPanel.refreshTopicList();
+    }
+    /**
+     * problem update in problem details panel
+     * @param problem 
+     */
+    public void tableLastSelectedProblemUpdate(FullProblem problem){
+        ProblemJPanel.tableLastSelectedProblemUpdate(problem);
+    }
+    /**
+     * problem tabel update for specific topic
+     * update the name of topic in problem panel
+     * @param topicName 
+     */
+    void refreshProblemJTable(String topicName) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ProblemJPanel.refreshProblemJTable(topicName);
+    }
+    /**
+     * problems tabel update for specific problem
+     * @param problem 
+     */
+    void refreshProblemJTable(SimpleProblem problem) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ProblemJPanel.refreshProblemJTable(problem);
+    }
+    
 }
